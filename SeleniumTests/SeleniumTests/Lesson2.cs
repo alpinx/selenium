@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
@@ -8,7 +9,7 @@ using OpenQA.Selenium.Support.UI;
 namespace SeleniumTests
 {
     [TestClass]
-    public class Lesson1
+    public class Lesson2
     {
         public static ChromeDriver driver;
         public string URL_Exercise_1 = "http://yandex.ru";
@@ -49,7 +50,6 @@ namespace SeleniumTests
             }
             
         }
-
         [TestCleanup]
         public void Clean()
         {

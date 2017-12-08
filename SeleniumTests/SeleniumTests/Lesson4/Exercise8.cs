@@ -33,7 +33,11 @@ namespace SeleniumTests.Lesson4
                         ListItemsWithoutStickers.Add(Item.FindElement(By.XPath(".//a")).GetAttribute("href"));
                     }
                 }
-                Assert.IsTrue(ListItemsWithoutStickers.Count==0,"There is no stickers on:\n"+ListItemsWithoutStickers.Aggregate((i,j)=>i+"\n"+j));
+                if (ListItemsWithoutStickers.Count > 0)
+                {
+                    Assert.Fail("There is no stickers on:\n" + ListItemsWithoutStickers.Aggregate((i, j) => i + "\n" + j));
+                }
+                
             }
             catch (Exception e)
             {

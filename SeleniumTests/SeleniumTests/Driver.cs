@@ -10,14 +10,14 @@ namespace SeleniumTests
 {
     public sealed class Driver
     {
-        private static IWebDriver instance;
+        private static readonly IWebDriver Instance=new ChromeDriver();
 
         private Driver()
         {
             
         }
 
-        private static readonly Lazy<IWebDriver> lazy = new Lazy<IWebDriver>(() => new ChromeDriver());
+        private static readonly Lazy<IWebDriver> lazy = new Lazy<IWebDriver>(() => Instance);
 
         public static IWebDriver GetInstance { get { return lazy.Value; } }
     }

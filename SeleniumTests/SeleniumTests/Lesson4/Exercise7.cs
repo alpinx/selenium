@@ -15,11 +15,11 @@ namespace SeleniumTests.Lesson4
         [TestInitialize]
         public void SetupTest()
         {
-            Driver.GetInstance.Navigate().GoToUrl(URL_Exercise_7);
+            Driver_Chrome.GetInstance_Chrome.Navigate().GoToUrl(URL_Exercise_7);
         }
         public void EnterAdminPanel()
         {
-            var driver = Driver.GetInstance;
+            var driver = Driver_Chrome.GetInstance_Chrome;
             try
             {
                 new WebDriverWait(driver, TimeSpan.FromSeconds(15)).Until(ExpectedConditions.ElementExists((By.Name("login_form"))));
@@ -43,7 +43,7 @@ namespace SeleniumTests.Lesson4
         [TestMethod]
         public void CheckMenuItems()
         {
-            var driver = Driver.GetInstance;
+            var driver = Driver_Chrome.GetInstance_Chrome;
             if (driver.Url.Contains("login"))
             {
                 EnterAdminPanel();
@@ -92,7 +92,7 @@ namespace SeleniumTests.Lesson4
         [ClassCleanup]
         public static void ShutDownTest()
         {
-            Driver.GetInstance.Quit();
+            Driver_Chrome.GetInstance_Chrome.Quit();
         }
     }
 }

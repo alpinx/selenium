@@ -15,13 +15,13 @@ namespace SeleniumTests.Lesson4
         [TestInitialize]
         public void SetupTest()
         {
-            Driver.GetInstance.Navigate().GoToUrl(URL_Exercise_8);
+            Driver_Chrome.GetInstance_Chrome.Navigate().GoToUrl(URL_Exercise_8);
         }
         
         [TestMethod]
         public void CheckMainPageStikers()
         {
-            var driver = Driver.GetInstance;
+            var driver = Driver_Chrome.GetInstance_Chrome;
             try
             {
                 var ListItemsWithoutStickers = new List<String>();
@@ -50,7 +50,7 @@ namespace SeleniumTests.Lesson4
         [ClassCleanup]
         public static void ShutDownTest()
         {
-            Driver.GetInstance.Quit();
+            Driver_Chrome.GetInstance_Chrome.Quit();
         }
     }
 }

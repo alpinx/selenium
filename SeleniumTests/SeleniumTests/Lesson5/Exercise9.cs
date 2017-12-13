@@ -20,11 +20,11 @@ namespace SeleniumTests.Lesson5
         [TestInitialize]
         public void SetupTest()
         {
-            Driver.GetInstance.Navigate().GoToUrl(URL_Exercise_9_admin);
+            Driver_Chrome.GetInstance_Chrome.Navigate().GoToUrl(URL_Exercise_9_admin);
         }
         public void EnterAdminPanel()
         {
-            var driver = Driver.GetInstance;
+            var driver = Driver_Chrome.GetInstance_Chrome;
             driver.Navigate().GoToUrl(URL_Exercise_9_1);
             try
             {
@@ -49,7 +49,7 @@ namespace SeleniumTests.Lesson5
         [TestMethod]
         public void Exercise9_1()
         {
-            var driver = Driver.GetInstance;
+            var driver = Driver_Chrome.GetInstance_Chrome;
             if (driver.Url.Contains("login"))
             {
                 EnterAdminPanel();
@@ -90,7 +90,7 @@ namespace SeleniumTests.Lesson5
         [TestMethod]
         public void Exercise9_2()
         {
-            var driver = Driver.GetInstance;
+            var driver = Driver_Chrome.GetInstance_Chrome;
             if (driver.Url.Contains("login"))
             {
                 EnterAdminPanel();
@@ -140,7 +140,7 @@ namespace SeleniumTests.Lesson5
         [ClassCleanup]
         public static void ShutDownTest()
         {
-            Driver.GetInstance.Quit();
+            Driver_Chrome.GetInstance_Chrome.Quit();
         }
     }
 }

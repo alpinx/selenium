@@ -19,7 +19,6 @@ namespace SeleniumTests
         {}
         private static readonly Lazy<IWebDriver> lazy_Chrome = new Lazy<IWebDriver>(() => Instance_Chrome);
         public static IWebDriver GetInstance_Chrome { get { return lazy_Chrome.Value; } }
-        public static bool IsRunning => Instance_Chrome==null;
     }
     public sealed class Driver_Firefox
     {
@@ -28,7 +27,7 @@ namespace SeleniumTests
         {}
         private static readonly Lazy<IWebDriver> lazy_Firefox = new Lazy<IWebDriver>(() => Instance_Firefox);
         public static IWebDriver GetInstance_Firefox { get { return lazy_Firefox.Value; } }
-        public static bool IsRunning => Instance_Firefox == null;
+       
     }
     public sealed class Driver_IE
     {
@@ -37,6 +36,6 @@ namespace SeleniumTests
         {}
         private static readonly Lazy<IWebDriver> lazy_IE = new Lazy<IWebDriver>(() => Instance_IE);
         public static IWebDriver GetInstance_IE { get { return lazy_IE.Value; } }
-        public static bool IsRunning => ((RemoteWebDriver)Instance_IE).SessionId != null;
+        
     }
 }

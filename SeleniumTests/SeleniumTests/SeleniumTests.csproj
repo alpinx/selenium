@@ -70,10 +70,17 @@
     <Compile Include="Lesson4\Exercise8.cs" />
     <Compile Include="Lesson5\Exercise10.cs" />
     <Compile Include="Lesson5\Exercise9.cs" />
+    <Compile Include="Lesson6\Exercise11.cs" />
+    <Compile Include="Lesson6\Exercise12.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lesson6\red-duck.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

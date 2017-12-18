@@ -51,36 +51,37 @@ namespace SeleniumTests.Lesson4
             try
             {
                 var ListMainItems = new List<string>();
-                var ListSubItems = new List<string>();
-
-                //нашли ссылки на главные элементы меню
+                //нашли главные элементы меню сделали список имен
                 var menuItems = driver.FindElements(By.XPath(".//*[@id='box-apps-menu']/li"));
                 foreach (var item in menuItems)
                 {
-                    ListMainItems.Add(item.FindElement(By.XPath(".//a")).GetAttribute("href"));
+                    ListMainItems.Add(item.Text);
                 }
-                //пробежались по главным элементам меню проверили H1 и добавили ссылки на sub-элементы меню
+                //идем по главным элементам меню проверяем H1 
                 foreach (var MainItem in ListMainItems)
                 {
-                    driver.Navigate().GoToUrl(MainItem);
-                    var H1elemennt = driver.FindElements(By.XPath(".//h1"));
-                    Assert.IsTrue(H1elemennt.Count > 0 && H1elemennt[0].Text != "");
-
+                    var MainElementClick=driver.FindElement(By.XPath(".//*[@id='box-apps-menu']/li//span[text()='"+MainItem+"']"));
+                    MainElementClick.Click();
+                    var H1elementMain = driver.FindElements(By.XPath(".//h1"));
+                    Assert.IsTrue(H1elementMain.Count > 0 && H1elementMain[0].Text != "");
+                    //у каждого главного ищем sub-элементы
                     var subItems = driver.FindElements(By.XPath(".//li[@id='app-']/ul//a"));
                     if (subItems.Count > 0)
                     {
+                        var ListSubItems = new List<string>();
                         foreach (var item in subItems)
                         {
-                            ListSubItems.Add(item.GetAttribute("href"));
+                            ListSubItems.Add(item.Text);
+                        }
+                        //идем по sub-элементам меню и проверяем H1
+                        foreach (var SubItem in ListSubItems)
+                        {
+                            var SubElementClick = driver.FindElement(By.XPath(".//li[@id='app-']/ul//span[text()='" + SubItem + "']"));
+                            SubElementClick.Click();
+                            var H1elementSub = driver.FindElements(By.XPath(".//h1"));
+                            Assert.IsTrue(H1elementSub.Count > 0 && H1elementSub[0].Text != "");
                         }
                     }
-                }
-                //пробежались по sub-элементам меню
-                foreach (var SubItem in ListSubItems)
-                {
-                    driver.Navigate().GoToUrl(SubItem);
-                    var H1elemennt = driver.FindElements(By.XPath(".//h1"));
-                    Assert.IsTrue(H1elemennt.Count > 0 && H1elemennt[0].Text != "");
                 }
             }
             catch (Exception e)

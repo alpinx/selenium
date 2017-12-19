@@ -57,15 +57,15 @@ namespace SeleniumTests.Lesson5
             try
             {
                 var countriesListElements = driver.FindElements(By.XPath(".//tbody//td/a[not(i)]"));
-                VerifyOrder(driver, countriesListElements);
-
-
+                //проверяем порядок
+                Assert.IsTrue(VerifyOrder(driver, countriesListElements));
+                //ищем не 0 зоны
                 var zonesCounter = driver.FindElements(By.XPath(".//table[@class='dataTable']/tbody/tr/td[last()-1]"));
                 var ListOFnotNullZones = new List<string>();
                 foreach (var zone in zonesCounter)
                 {
                     if (zone.Text != "0")
-                    {
+                    {//передаем еще и количество зон на странице Countries чтобы проверить с реальным количеством 
                         ListOFnotNullZones.Add(zone.Text + "!" + zone.FindElement(By.XPath(".//../td/a")).GetAttribute("href"));
                     }
                 }
@@ -77,7 +77,7 @@ namespace SeleniumTests.Lesson5
                     var ListOfZones = driver.FindElements(By.XPath(
                         ".//table[@id='table-zones']//tbody//td/input[contains(@name,'name') and @value!='']"));
                     Assert.IsTrue(ListOfZones.Count == Int32.Parse(split[0]));
-                    VerifyOrder(driver, ListOfZones);
+                    Assert.IsTrue(VerifyOrder(driver, ListOfZones));
                 }
 
             }
@@ -111,11 +111,8 @@ namespace SeleniumTests.Lesson5
                     driver.Navigate().GoToUrl(eachCountry);
                     var countriesListElements = driver.FindElements(By.XPath(
                         ".//table[@id='table-zones']/tbody/tr/td/select[contains(@name,'zone_code')]/option[@selected='selected']"));
-                    VerifyOrder(driver, countriesListElements);
+                    Assert.IsTrue(VerifyOrder(driver, countriesListElements));
                 }
-
-                
-                
             }
             catch (Exception e)
             {
@@ -126,15 +123,13 @@ namespace SeleniumTests.Lesson5
 
         public bool VerifyOrder(IWebDriver driver, IReadOnlyCollection<IWebElement> elements)
         {
-
             var StringList = new List<string>();
             foreach (var oneElement in elements)
             {
                 StringList.Add(oneElement.Text);
             }
             var expectedList = StringList.OrderBy(s => s);
-            Assert.IsTrue(expectedList.SequenceEqual(StringList));
-            return true;
+            return expectedList.SequenceEqual(StringList);
         }
 
         [ClassCleanup]

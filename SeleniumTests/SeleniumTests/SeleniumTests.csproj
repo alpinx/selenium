@@ -72,6 +72,7 @@
     <Compile Include="Lesson5\Exercise9.cs" />
     <Compile Include="Lesson6\Exercise11.cs" />
     <Compile Include="Lesson6\Exercise12.cs" />
+    <Compile Include="Lesson7\Exercise13.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

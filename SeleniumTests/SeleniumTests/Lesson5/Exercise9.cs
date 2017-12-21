@@ -61,22 +61,22 @@ namespace SeleniumTests.Lesson5
                 Assert.IsTrue(VerifyOrder(driver, countriesListElements));
                 //ищем не 0 зоны
                 var zonesCounter = driver.FindElements(By.XPath(".//table[@class='dataTable']/tbody/tr/td[last()-1]"));
-                var ListOFnotNullZones = new List<string>();
+                var listOFnotNullZones = new Dictionary<string,string>();
                 foreach (var zone in zonesCounter)
                 {
                     if (zone.Text != "0")
                     {//передаем еще и количество зон на странице Countries чтобы проверить с реальным количеством 
-                        ListOFnotNullZones.Add(zone.Text + "!" + zone.FindElement(By.XPath(".//../td/a")).GetAttribute("href"));
+                        listOFnotNullZones.Add(zone.FindElement(By.XPath(".//../td/a")).GetAttribute("href"), zone.Text);
                     }
                 }
 
-                foreach (var url in ListOFnotNullZones)
+                foreach (var url in listOFnotNullZones.Keys)
                 {
-                    string[] split = url.Split(new char[] { '!' });
-                    driver.Navigate().GoToUrl(split[1]);
+                    
+                    driver.Navigate().GoToUrl(url);
                     var ListOfZones = driver.FindElements(By.XPath(
                         ".//table[@id='table-zones']//tbody//td/input[contains(@name,'name') and @value!='']"));
-                    Assert.IsTrue(ListOfZones.Count == Int32.Parse(split[0]));
+                    Assert.IsTrue(ListOfZones.Count == Int32.Parse(listOFnotNullZones[url]));
                     Assert.IsTrue(VerifyOrder(driver, ListOfZones));
                 }
 
@@ -110,7 +110,7 @@ namespace SeleniumTests.Lesson5
                 {
                     driver.Navigate().GoToUrl(eachCountry);
                     var countriesListElements = driver.FindElements(By.XPath(
-                        ".//table[@id='table-zones']/tbody/tr/td/select[contains(@name,'zone_code')]/option[@selected='selected']"));
+                        ".//select[contains(@name,'zone_code')]/option[@selected='selected']"));
                     Assert.IsTrue(VerifyOrder(driver, countriesListElements));
                 }
             }

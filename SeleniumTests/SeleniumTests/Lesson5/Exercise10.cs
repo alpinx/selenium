@@ -17,7 +17,7 @@ namespace SeleniumTests.Lesson5
         public long Amount { get; set; }
         public List<int> Color;
         public int Size { get; set; }
-        public string Style { get; set; }
+        public List<string> Style { get; set; }
     }
 
     public class Duck
@@ -89,7 +89,7 @@ namespace SeleniumTests.Lesson5
                             Amount = Int64.Parse(price.Text.Replace("$", "")),
                             Color = NormalizeColor(price.GetCssValue("color")),
                             Size = Int32.Parse(price.GetCssValue("font-size").Remove(2)),
-                            Style = price.TagName
+                            Style = GetStyle(price)
                         },
                         SalePrice = saleprice == null ? null :
                         new Price()
@@ -97,23 +97,33 @@ namespace SeleniumTests.Lesson5
                             Amount = Int64.Parse(saleprice.Text.Replace("$", "")),
                             Color = NormalizeColor(saleprice.GetCssValue("color")),
                             Size = Int32.Parse(saleprice.GetCssValue("font-size").Remove(2)),
-                            Style = saleprice.TagName
+                            Style = GetStyle(saleprice)
                         }
                     });
-
-                   
-                   
                     Assert.IsTrue(listofProducts.Last().Price.Color[0] == listofProducts.Last().Price.Color[1]
                          && listofProducts.Last().Price.Color[1] == listofProducts.Last().Price.Color[2],
-                         "Wrong price color\n"+ listofProducts.Last().Name);
+                         "Wrong price color\n" + listofProducts.Last().Name);
+
                     if (listofProducts.Last().SalePrice != null)
                     {
                         Assert.IsTrue(listofProducts.Last().Price.Amount > listofProducts.Last().SalePrice.Amount);
                         Assert.IsTrue(listofProducts.Last().Price.Size < listofProducts.Last().SalePrice.Size);
-                        Assert.IsTrue(listofProducts.Last().SalePrice.Color[0] > 100 && 
-                            listofProducts.Last().SalePrice.Color[1] == listofProducts.Last().SalePrice.Color[2] && 
-                            listofProducts.Last().SalePrice.Color[1] == 0,
+                        Assert.IsTrue(listofProducts.Last().SalePrice.Color[0] > 100 &&
+                                      listofProducts.Last().SalePrice.Color[1] ==
+                                      listofProducts.Last().SalePrice.Color[2] &&
+                                      listofProducts.Last().SalePrice.Color[1] == 0,
                             "Wrong sale price color\n" + listofProducts.Last().Name);
+                        Assert.IsTrue(listofProducts.Last().SalePrice.Style[0] == "none");
+                        Assert.IsTrue(listofProducts.Last().SalePrice.Style[1] == "solid");
+                        Assert.IsTrue(listofProducts.Last().Price.Style[0] == "line-through");
+                        Assert.IsTrue(listofProducts.Last().Price.Style[1] == "solid");
+                        Assert.IsTrue(listofProducts.Last().SalePrice.Style[2] == "700");
+
+                    }
+                    else
+                    {
+                        Assert.IsTrue(listofProducts.Last().Price.Style[0] == "none");
+                        Assert.IsTrue(listofProducts.Last().Price.Style[1] == "solid");
                     }
                 }
                 foreach (var productOnMain in listofProducts)
@@ -128,24 +138,43 @@ namespace SeleniumTests.Lesson5
                             null :
                             driver.FindElement(By.XPath(".//div[@class='information']//strong[contains(@class,'price')]"));
 
-                    Assert.IsTrue(name.Text == productOnMain.Name, "Wrong  name!\n"+productOnMain.URL);
+                    Assert.IsTrue(name.Text == productOnMain.Name, "Wrong  name!\n" + productOnMain.URL);
                     Assert.IsTrue(manufacturer.GetAttribute("Title") == productOnMain.Manufacturer, "Wrong manufacturer\n" + productOnMain.URL);
 
                     Assert.IsTrue(Int64.Parse(price.Text.Replace("$", "")) == productOnMain.Price.Amount, "Wrong price\n" + productOnMain.URL);
-                    Assert.IsTrue(price.TagName == productOnMain.Price.Style, "Wrong price text style\n" + productOnMain.URL);
+                    //Assert.IsTrue(price.TagName == productOnMain.Price.Style, "Wrong price text style\n" + productOnMain.URL);
                     var color = NormalizeColor(price.GetCssValue("color"));
+                    var Style = GetStyle(price);
                     Assert.IsTrue(color[0] == color[1] && color[1] == color[2], "Wrong price color\n" + productOnMain.URL);
+
 
                     if (saleprice != null && productOnMain.SalePrice != null)
                     {
                         Assert.IsTrue(Int64.Parse(saleprice.Text.Replace("$", "")) == productOnMain.SalePrice.Amount);
-                        Assert.IsTrue(saleprice.TagName == productOnMain.SalePrice.Style, "Wrong price text style\n" + productOnMain.URL);
+                        // Assert.IsTrue(saleprice.TagName == productOnMain.SalePrice.Style, "Wrong price text style\n" + productOnMain.URL);
                         var salecolor = NormalizeColor(saleprice.GetCssValue("color"));
-                        Assert.IsTrue(salecolor[0] > 100 && salecolor[1] == salecolor[2] && salecolor[1] == 0, "Wrong sale price color\n" + productOnMain.URL);
+                        var saleStyle = GetStyle(saleprice);
+                        Assert.IsTrue(salecolor[0] > 100 && salecolor[1] == salecolor[2] && salecolor[1] == 0,
+                            "Wrong sale price color\n" + productOnMain.URL);
+                        Assert.IsTrue(saleStyle[0] == "none");
+                        Assert.IsTrue(saleStyle[1] == "solid");
+                        Assert.IsTrue(saleStyle[2] == "700");
+                        Assert.IsTrue(Style[0] == "line-through");
+                        Assert.IsTrue(Style[1] == "solid");
 
-                        Assert.IsTrue(Int32.Parse(saleprice.GetCssValue("font-size").Remove(2)) > Int32.Parse(price.GetCssValue("font-size").Remove(2)), "Wrong sale price size\n" + productOnMain.URL);
+
+                        Assert.IsTrue(
+                            Int32.Parse(saleprice.GetCssValue("font-size").Remove(2)) >
+                            Int32.Parse(price.GetCssValue("font-size").Remove(2)),
+                            "Wrong sale price size\n" + productOnMain.URL);
                         Assert.IsTrue(price.TagName == "s", "Wrong regular price text style\n" + productOnMain.URL);
-                        Assert.IsTrue(Int64.Parse(price.Text.Replace("$", "")) > Int64.Parse(saleprice.Text.Replace("$", "")));
+                        Assert.IsTrue(Int64.Parse(price.Text.Replace("$", "")) >
+                                      Int64.Parse(saleprice.Text.Replace("$", "")));
+                    }
+                    else
+                    {
+                        Assert.IsTrue(Style[0] == "none");
+                        Assert.IsTrue(Style[1] == "solid");
                     }
                 }
             }
@@ -157,10 +186,17 @@ namespace SeleniumTests.Lesson5
 
         public List<int> NormalizeColor(string color)
         {
-            color = color.Substring(color.IndexOf('(')+1, color.IndexOf(')') - color.IndexOf('(') - 1);
-            return color.Split(new char[] {','}).ToArray().Select(x => Int32.Parse(x)).ToList();
+            color = color.Substring(color.IndexOf('(') + 1, color.IndexOf(')') - color.IndexOf('(') - 1);
+            return color.Split(new char[] { ',' }).ToArray().Select(x => Int32.Parse(x)).ToList();
+        }
+        public List<string> GetStyle(IWebElement saleprice)
+        {
+            var style = saleprice.GetCssValue("text-decoration");
+            style = style.Substring(0, style.IndexOf('(') - 4);
+            var listofStyles = style.Split(new char[] { ' ' }).ToArray().Select(x => x).ToList();
+            listofStyles.Add(saleprice.GetCssValue("font-weight"));
+            return listofStyles;
         }
 
-       
     }
 }

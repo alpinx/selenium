@@ -33,6 +33,7 @@ namespace SeleniumTests
             FirefoxProfile prof = new FirefoxProfile();
            // prof.SetPreference("browser.link.open_newwindow", "2");
             option.Profile = prof;
+            option.PageLoadStrategy = PageLoadStrategy.Eager;
             return option;
         }
 

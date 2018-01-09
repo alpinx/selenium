@@ -1,0 +1,23 @@
+{
+  "unregisterIfStillDownAfter": 10000,
+  "capabilities": [
+    {
+      "seleniumProtocol": "WebDriver",
+      "browserName": "internet explorer",
+      "maxInstances": 1,
+      "version": "11",
+      "platform": "VISTA"
+    }
+  ],
+  "custom": {},
+  "nodeStatusCheckTimeout": 10000,
+  "hubHost": "192.168.52.51",
+  "hubPort": 4444,
+  "downPollingLimit": 0,
+  "proxy": "com.groupon.seleniumgridextras.grid.proxies.SetupTeardownProxy",
+  "port": 5555,
+  "servlets": [],
+  "maxSession": 3,
+  "registerCycle": 5000,
+  "register": true
+}

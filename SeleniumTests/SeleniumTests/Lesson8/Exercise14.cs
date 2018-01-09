@@ -49,24 +49,25 @@ namespace SeleniumTests.Lesson8
             {
                 var editCountry = driver.FindElement(By.XPath(".//a[@title='Edit']"));
                 editCountry.Click();
-                var linkOutside = driver.FindElement(By.XPath(".//strong[text()='Code']/../a"));
+                var linkOutside = driver.FindElements(By.XPath(".//strong/../a/i"));
                
 
 
                 string mainWindow = driver.CurrentWindowHandle;
                 ICollection<string> oldWindows = driver.WindowHandles;
-                linkOutside.Click(); 
-                new WebDriverWait(driver,TimeSpan.FromSeconds(10)).Until(d=>d.WindowHandles.Count>1 && driver.WindowHandles.Contains(mainWindow));
-                driver.SwitchTo().Window(driver.WindowHandles[1]);
-                new WebDriverWait(driver,TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementExists(By.XPath(".//a[@class='mw-wiki-logo']")));
-               
-                driver.Close();
-                Assert.IsTrue(driver.WindowHandles.Count==1);
-                driver.SwitchTo().Window(mainWindow);
 
-
-
-
+                foreach (var link in linkOutside)
+                {
+                    link.Click();
+                    new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.WindowHandles.Count > 1 && driver.WindowHandles.Contains(mainWindow));
+                    driver.SwitchTo().Window(driver.WindowHandles[1]);
+                    new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementIsVisible(By.XPath(".//body")));
+                    var urlofOutsidepage = driver.Url;
+                    driver.Close();
+                    Assert.IsTrue(driver.WindowHandles.Count == 1);
+                    driver.SwitchTo().Window(mainWindow);
+                    Assert.IsTrue(driver.Url!=urlofOutsidepage);
+                }
             }
             catch (Exception e)
             {

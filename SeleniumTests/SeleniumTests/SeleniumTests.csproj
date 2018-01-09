@@ -74,15 +74,35 @@
     <Compile Include="Lesson6\Exercise12.cs" />
     <Compile Include="Lesson7\Exercise13.cs" />
     <Compile Include="Lesson8\Exercise14.cs" />
+    <Compile Include="Lesson9\Exercise16.cs" />
+    <Compile Include="Lesson9\Exercise15.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Lesson9\hub\cached_release_list.json" />
+    <None Include="Lesson9\hub\configs\AlexPC\node_5555.json" />
+    <None Include="Lesson9\hub\configs\AlexPC\selenium_grid_extras_config.json" />
+    <None Include="Lesson9\hub\configs\apigin\node_5555.json" />
+    <None Include="Lesson9\hub\configs\apigin\selenium_grid_extras_config.json" />
+    <None Include="Lesson9\hub\hub_4444.json" />
+    <None Include="Lesson9\hub\log\grid_extras.2018-01-09.log" />
+    <None Include="Lesson9\hub\log\hub_4444.log" />
+    <None Include="Lesson9\hub\log\hub_4444.log.lck" />
+    <None Include="Lesson9\hub\log\session_logs\192.168.52.34_09_01_2018.log" />
+    <None Include="Lesson9\hub\log\session_logs\192.168.52.51_09_01_2018.log" />
+    <None Include="Lesson9\hub\selenium_grid_extras_config.json" />
+    <None Include="Lesson9\hub\selenium_grid_extras_config.json.example" />
+    <None Include="Lesson9\hub\start_grid_extras.bat" />
+    <None Include="Lesson9\hub\video_output\79f7ac6aed25004c5143fd862f975692.mp4" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lesson6\red-duck.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Lesson9\hub\shared\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

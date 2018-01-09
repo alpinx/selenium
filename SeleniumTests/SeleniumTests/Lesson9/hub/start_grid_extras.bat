@@ -1,0 +1,1 @@
+ java -jar "C:\Users\Apigin\Downloads\lesson9\hub\SeleniumGridExtras-2.0.1-SNAPSHOT-jar-with-dependencies.jar"

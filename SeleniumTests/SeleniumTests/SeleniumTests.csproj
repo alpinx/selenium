@@ -94,6 +94,11 @@
     <Compile Include="Lesson9\Exercise15.cs" />
     <Compile Include="Lesson№10\Exercise17.cs" />
     <Compile Include="Lesson№10\Exercise18.cs" />
+    <Compile Include="Lesson№11\Application.cs" />
+    <Compile Include="Lesson№11\Cart.cs" />
+    <Compile Include="Lesson№11\MainPage.cs" />
+    <Compile Include="Lesson№11\Product.cs" />
+    <Compile Include="Lesson№11\Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lesson9\hub\shared\" />
-    <Folder Include="Lesson№11\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
